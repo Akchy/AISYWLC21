@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 
 class Inaugurate extends StatefulWidget {
   final int index;
@@ -12,12 +15,13 @@ class Inaugurate extends StatefulWidget {
 class _InaugurateState extends State<Inaugurate> {
 
   late int index;
-  late bool menu;
+  bool isButtonDisabled =false;
+
   List<String>? displayPic = [
-    'images/deepak.jpeg',
-    'images/suresh.jpg',
-    'images/rajashree.jpg',
-    'images/vijayalatha.jpg'
+    'assets/images/deepak.jpeg',
+    'assets/images/suresh.jpg',
+    'assets/images/rajashree.jpg',
+    'assets/images/vijayalatha.jpg'
   ];
 
   List<String> names = [
@@ -34,74 +38,39 @@ class _InaugurateState extends State<Inaugurate> {
     'Vice Chair, IEEE India Council',
   ];
 
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  var player = AudioPlayer();
+
+
   @override
   void initState() {
     super.initState();
     index=widget.index;
-    setState(() {
-      menu=false;
-    });
+    audioLoading();
+  }
+
+  void audioLoading()async{
+
+    var duration = await player.setAsset('assets/audio/audio.mp3');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Row(
         children: [
-          Row(
-            children: [
-              Container(
-                color: Colors.black87,
-                padding: const EdgeInsets.only(top: 40,bottom: 40),
-                width: MediaQuery.of(context).size.width/4,
-                height: MediaQuery.of(context).size.height,
-                child: leftSide(),
-              ),
-              Container(
-                width: 3*MediaQuery.of(context).size.width/4,
-                height: MediaQuery.of(context).size.height,
-                child: rightSide(),
-              )
-            ],
-          ),
-          menu?Container(
+          Container(
+            color: Colors.black87,
+            padding: const EdgeInsets.only(top: 40,bottom: 40),
+            width: MediaQuery.of(context).size.width/4,
             height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.black.withOpacity(0.6),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    //margin: const EdgeInsets.only(top: 50),
-                    padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 100),
-                    color: Colors.black,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: listWidget(),
-                    ),
-                  ),
-
-                  Container(
-                    margin: const EdgeInsets.only(top:20),
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.black,
-                    ),
-                    child: InkWell(
-                      onTap: (){
-                        setState(() {
-                          menu=!menu;
-                        });
-                      },
-                      child: const Icon(Icons.clear,size: 25,),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ):const SizedBox(height: 1,)
+            child: leftSide(),
+          ),
+          SizedBox(
+            width: 3*MediaQuery.of(context).size.width/4,
+            height: MediaQuery.of(context).size.height,
+            child: rightSide(),
+          )
         ],
       )
     );
@@ -126,24 +95,16 @@ class _InaugurateState extends State<Inaugurate> {
             const SizedBox(height: 15,),
             Text(names[index],style: GoogleFonts.andada(fontSize: 20),),
             const SizedBox(height: 5,),
-            Text(designation[index],style: GoogleFonts.andada(fontSize: 15,color: Colors.white54),)
+            Text(designation[index],style: GoogleFonts.andada(fontSize: 15,color: Colors.white54),),
           ],
         ),
-
-        Container(
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
+        isButtonDisabled?Container(
+          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+          child: DelayedDisplay(
+            delay: const Duration(seconds: 1),
+            child: Text('Thank you for Lighting the lamp',style: GoogleFonts.andada(fontSize: 25),textAlign: TextAlign.center,)
           ),
-          child: InkWell(
-            onTap: (){
-              setState(() {
-                menu=!menu;
-              });
-            },
-            child: const Icon(Icons.account_circle,size: 40,),
-          ),
-        )
-
+        ):const SizedBox(),
       ],
     );
   }
@@ -154,16 +115,39 @@ class _InaugurateState extends State<Inaugurate> {
         Container(
           padding: const EdgeInsets.only(bottom: 50,top: 20),
           height: 4*MediaQuery.of(context).size.height/5,
-          child: Image.asset('images/nilavilakku.png'),
+          child: Stack(
+            children: [
+              const Image(image: AssetImage('assets/images/plane.png')),
+              !isButtonDisabled?
+                const SizedBox()
+                  :const DelayedDisplay(
+                    delay: Duration(seconds: 1),
+                    slidingBeginOffset: Offset(0, 0.1),
+                    child: Image(image:AssetImage('assets/images/one.gif'))
+                  ),
+            ],
+          ),
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height/5,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("images/fire.gif"),
+              Image.asset("assets/images/fire.gif"),
               MaterialButton(
-                onPressed: (){},
+                onPressed: isButtonDisabled?null:(){
+                  var washingtonRef = firestore.collection('diya').doc('IfKwGg9LbZLRlj6ThXfi');
+                  washingtonRef.update({
+                    "count": FieldValue.increment(1)
+                  });
+                  setState(() {
+                    isButtonDisabled =true;
+                  });
+
+                  player.play();
+
+                },
+                disabledColor: Colors.white70,
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -176,40 +160,5 @@ class _InaugurateState extends State<Inaugurate> {
       ],
     );
   }
-
-  List<Widget> listWidget(){
-    List<Widget> rows=[];
-
-    for(var temp in names) {
-      rows.add(listNames(names.indexOf(temp)));
-    }
-
-    return rows;
-  }
-
-  Widget listNames(id){
-    return InkWell(
-      onTap: (){
-        setState(() {
-          index=id;
-          menu=false;
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 1),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10,),
-            Text(names[id],style: GoogleFonts.andada(fontSize: 20),),
-            const SizedBox(height: 5,),
-            Text(designation[id],style: GoogleFonts.andada(fontSize: 15,color: Colors.white54),),
-            const SizedBox(height: 10,),
-          ],
-        ),
-      ),
-    );
-  }
-
 
 }
