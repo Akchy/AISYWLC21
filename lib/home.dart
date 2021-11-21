@@ -22,6 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
     'Dr. K.R. Suresh Nair',
     'Dr. Rajashree Jain',
     'Dr. Vijayalatha Reddy',
+    'Prof. Shankar J'
   ];
 
   @override

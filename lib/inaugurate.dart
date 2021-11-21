@@ -21,7 +21,8 @@ class _InaugurateState extends State<Inaugurate> {
     'assets/images/deepak.jpeg',
     'assets/images/suresh.jpg',
     'assets/images/rajashree.jpg',
-    'assets/images/vijayalatha.jpg'
+    'assets/images/vijayalatha.jpg',
+    'assets/images/sankar.jpg'
   ];
 
   List<String> names = [
@@ -29,6 +30,7 @@ class _InaugurateState extends State<Inaugurate> {
     'Dr. K.R. Suresh Nair',
     'Dr. Rajashree Jain',
     'Dr. Vijayalatha Reddy',
+    'Prof. Shankar J',
   ];
 
   List<String> designation =[
@@ -36,6 +38,7 @@ class _InaugurateState extends State<Inaugurate> {
     'Chair, IEEE India Council',
     'Secretary, IEEE India Council',
     'Vice Chair, IEEE India Council',
+    'Chair, SAC, IEEE Kerala Section',
   ];
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
