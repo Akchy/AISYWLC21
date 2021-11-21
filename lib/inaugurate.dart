@@ -26,7 +26,7 @@ class _InaugurateState extends State<Inaugurate> {
   ];
 
   List<String> names = [
-    'Dr. Deepak Mathur',
+    'Deepak Mathur',
     'Dr. K.R. Suresh Nair',
     'Dr. Rajashree Jain',
     'Dr. Vijayalatha Reddy',
@@ -37,7 +37,7 @@ class _InaugurateState extends State<Inaugurate> {
     'Director, IEEE R10',
     'Chair, IEEE India Council',
     'Secretary, IEEE India Council',
-    'Vice Chair, IEEE India Council',
+    'Vice Chair, SAC, IEEE India Council',
     'Chair, SAC, IEEE Kerala Section',
   ];
 
@@ -54,7 +54,7 @@ class _InaugurateState extends State<Inaugurate> {
 
   void audioLoading()async{
 
-    var duration = await player.setAsset('assets/audio/audio.mp3');
+    var duration = await player.setAsset('assets/audio/claps.mp3');
   }
 
   @override
@@ -96,9 +96,9 @@ class _InaugurateState extends State<Inaugurate> {
               child: ClipOval(child: Image.asset(displayPic![index],fit: BoxFit.fitWidth,)),
             ),
             const SizedBox(height: 15,),
-            Text(names[index],style: GoogleFonts.andada(fontSize: 20),),
+            Text(names[index],style: GoogleFonts.andada(fontSize: 20),textAlign: TextAlign.center,),
             const SizedBox(height: 5,),
-            Text(designation[index],style: GoogleFonts.andada(fontSize: 15,color: Colors.white54),),
+            Text(designation[index],style: GoogleFonts.andada(fontSize: 15,color: Colors.white54,),textAlign: TextAlign.center),
           ],
         ),
         isButtonDisabled?Container(
