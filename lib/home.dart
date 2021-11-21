@@ -4,8 +4,6 @@ import 'dart:async';
 import 'package:aisywlc21/inaugurate.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -18,7 +16,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
   int dropdownValue = 0;
   List<String> names = [
     'Dr. Deepak Mathur',
@@ -26,31 +23,6 @@ class _MyHomePageState extends State<MyHomePage> {
     'Dr. Rajashree Jain',
     'Dr. Vijayalatha Reddy',
   ];
-  late CollectionReference reference;
-  late StreamSubscription<QuerySnapshot> streamSub;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    Firebase.initializeApp();
-
-    reference = firestore.collection('diya');
-    streamSub = reference.snapshots().listen((querySnapshot) {
-      for (var change in querySnapshot.docChanges) {
-        print(change.doc.data().toString());
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    streamSub.cancel();
-
-  }
 
   @override
   Widget build(BuildContext context) {
