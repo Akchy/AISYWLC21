@@ -18,11 +18,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int dropdownValue = 0;
   List<String> names = [
-    'Deepak Mathur',
     'Dr. K.R. Suresh Nair',
+    'Mr. Deepak Mathur',
+    'Ms. Sarada Jayakrishnan',
+    'Dr. Thalappil Pradeep',
+    'Dr. Prerna Gaur',
     'Dr. Rajashree Jain',
-    'Dr. Vijayalatha Reddy',
-    'Prof. Shankar J'
+    'Prof. Shankar J',
+    'Dr. Y. Vijayalatha'
   ];
 
   @override

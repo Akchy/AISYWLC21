@@ -18,27 +18,36 @@ class _InaugurateState extends State<Inaugurate> {
   bool isButtonDisabled =false;
 
   List<String>? displayPic = [
+    'assets/images/suresh.jpeg',
     'assets/images/deepak.jpeg',
-    'assets/images/suresh.jpg',
+    'assets/images/sarada.jpg',
+    'assets/images/pradeep.png',
+    'assets/images/prerna.png',
     'assets/images/rajashree.jpg',
+    'assets/images/sankar.jpeg',
     'assets/images/vijayalatha.jpg',
-    'assets/images/sankar.jpg'
   ];
 
   List<String> names = [
-    'Deepak Mathur',
     'Dr. K.R. Suresh Nair',
+    'Mr. Deepak Mathur',
+    'Ms. Sarada Jayakrishnan',
+    'Dr. Thalappil Pradeep',
+    'Dr. Prerna Gaur',
     'Dr. Rajashree Jain',
-    'Dr. Vijayalatha Reddy',
     'Prof. Shankar J',
+    'Dr. Y. Vijayalatha'
   ];
 
   List<String> designation =[
-    'Director, IEEE R10',
     'Chair, IEEE India Council',
+    'Director, IEEE Region 10',
+    'Chair, IEEE Kerala Section',
+    'Institute Professor, IIT Madras',
+    'Treasurer, IEEE India Council',
     'Secretary, IEEE India Council',
-    'Vice Chair, SAC, IEEE India Council',
-    'Chair, SAC, IEEE Kerala Section',
+    'Chair, Student Activities, IEEE Kerala Section',
+    'Vice Chair, Student Activities, IEEE India Council',
   ];
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
