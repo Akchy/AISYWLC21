@@ -1,15 +1,12 @@
-import 'package:aisywlc21/home.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
-
 import 'inaugurate.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +15,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(),
+      home: const Inaugurate(index: 0),
     );
   }
 }

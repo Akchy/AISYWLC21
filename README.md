@@ -1,4 +1,4 @@
-# aisywlc21
+# aisywlc_inauguration
 
 A new Flutter application.
 

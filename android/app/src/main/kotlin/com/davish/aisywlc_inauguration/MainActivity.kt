@@ -1,4 +1,4 @@
-package com.davish.aisywlc21
+package com.davish.aisywlc_inauguration
 
 import io.flutter.embedding.android.FlutterActivity
 

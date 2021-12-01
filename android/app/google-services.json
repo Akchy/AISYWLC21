@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "6638946312",
+    "firebase_url": "https://aisywlc21-default-rtdb.firebaseio.com",
     "project_id": "aisywlc21",
     "storage_bucket": "aisywlc21.appspot.com"
   },
@@ -10,6 +11,35 @@
         "mobilesdk_app_id": "1:6638946312:android:189f63121229d5d13a29bd",
         "android_client_info": {
           "package_name": "com.davish.aisywlc21"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6638946312-brehl11lmp2kr56rqqh6tbhkenkp6426.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhtA2jH56NlL0FrDJUrG-nLBeCweE7xIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6638946312-brehl11lmp2kr56rqqh6tbhkenkp6426.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6638946312:android:2442b838a1b248343a29bd",
+        "android_client_info": {
+          "package_name": "com.davish.aisywlc_inauguration"
         }
       },
       "oauth_client": [

@@ -1,4 +1,4 @@
-name: aisywlc21
+name: aisywlc_inauguration
 description: Inauguration Ceremony of AISYWLC'21 Hybrid Event
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -16,6 +16,7 @@ dependencies:
   firebase_core: ^1.10.0
   cloud_firestore: ^3.1.0
   delayed_display: ^2.0.0
+  #audioplayers: ^0.20.1
   just_audio: ^0.9.18
 
   cupertino_icons: ^1.0.2
@@ -26,6 +27,7 @@ dev_dependencies:
 
   flutter_lints: ^1.0.0
 
+
 # The following section is specific to Flutter.
 flutter:
 
@@ -33,4 +35,5 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/lights/
     - assets/audio/

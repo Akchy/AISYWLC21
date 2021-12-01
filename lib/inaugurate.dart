@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delayed_display/delayed_display.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
+
 
 class Inaugurate extends StatefulWidget {
   final int index;
@@ -15,7 +19,11 @@ class Inaugurate extends StatefulWidget {
 class _InaugurateState extends State<Inaugurate> {
 
   late int index;
-  bool isButtonDisabled =false;
+  late bool menu;
+  var count;
+  late bool one=false, two=false,three=false, four=false, five=false;
+  late bool six=false, seven=false,eight=false,nine=false;
+  late bool once =true;
 
   List<String>? displayPic = [
     'assets/images/suresh.jpeg',
@@ -54,15 +62,12 @@ class _InaugurateState extends State<Inaugurate> {
   ];
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  late CollectionReference reference;
+  late StreamSubscription<QuerySnapshot> streamSub;
+  //AudioPlayer audioPlayer = AudioPlayer();
+
+
   var player = AudioPlayer();
-
-
-  @override
-  void initState() {
-    super.initState();
-    index=widget.index;
-    audioLoading();
-  }
 
   void audioLoading()async{
 
@@ -70,22 +75,158 @@ class _InaugurateState extends State<Inaugurate> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    audioLoading();
+
+    Firebase.initializeApp();
+
+    firestoreDB();
+
+
+    index=widget.index;
+    setState(() {
+      menu=false;
+    });
+
+  }
+
+  void firestoreDB(){
+    reference = firestore.collection('diya');
+    streamSub = reference.snapshots().listen((querySnapshot) async {
+      for (var change in querySnapshot.docChanges) {
+
+        count = change.doc.get('count');
+        if(count>0){
+          player.play();//audioPlayer.play('assets/audio/claps.mp3', isLocal: true,);
+        }
+        setState(() {
+          switch(count){
+            case 0: one=two=three=four=five=six=seven=eight=false; break;
+            case 1: one=true;break;
+            case 2: two=one=true;break;
+            case 3: three=two=one=true;break;
+            case 4: four=three=two=one=true;break;
+            case 5: five=four=three=two=one=true;break;
+            case 6: six=five=four=three=two=one=true;break;
+            case 7: seven=six=five=four=three=two=one=true;break;
+            case 8: eight=seven=six=five=four=three=two=one=true;break;
+            case 9: nine=eight=seven=six=five=four=three=two=one=true;break;
+          }
+        });
+      }
+    });
+
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    streamSub.cancel();
+
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      body: Stack(
         children: [
-          Container(
-            color: Colors.black87,
-            padding: const EdgeInsets.only(top: 40,bottom: 40),
-            width: MediaQuery.of(context).size.width/4,
-            height: MediaQuery.of(context).size.height,
-            child: leftSide(),
+          Row(
+            children: [
+              Container(
+                color: Colors.black87,
+                padding: const EdgeInsets.only(top: 40,bottom: 40),
+                width: MediaQuery.of(context).size.width/4,
+                height: MediaQuery.of(context).size.height,
+                child: leftSide(),
+              ),
+              SizedBox(
+                width: 3*MediaQuery.of(context).size.width/4,
+                height: MediaQuery.of(context).size.height,
+                child: rightSide(),
+              )
+            ],
           ),
-          SizedBox(
-            width: 3*MediaQuery.of(context).size.width/4,
+
+          if(once)Container(
             height: MediaQuery.of(context).size.height,
-            child: rightSide(),
-          )
+            width: MediaQuery.of(context).size.width,
+            color: Colors.black.withOpacity(0.6),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    //margin: const EdgeInsets.only(top: 50),
+                    padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 100),
+                    color: Colors.black,
+                    child:Text('Welcome To AISYWLC21 Inauguration',
+                    style: GoogleFonts.andada(fontSize: 25,fontStyle: FontStyle.italic),),
+                  ),
+
+                  Container(
+                    margin: const EdgeInsets.only(top:20),
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black,
+                    ),
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          once=!once;
+                        });
+                      },
+                      child: const Icon(Icons.clear,size: 25,),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          menu?Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.black.withOpacity(0.6),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 100),
+                    color: Colors.black,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: listWidget(),
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    margin: const EdgeInsets.only(top:20),
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black,
+                    ),
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          menu=!menu;
+                        });
+                      },
+                      child: const Icon(Icons.clear,size: 25,),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ):const SizedBox(height: 1,)
         ],
       )
     );
@@ -108,72 +249,143 @@ class _InaugurateState extends State<Inaugurate> {
               child: ClipOval(child: Image.asset(displayPic![index],fit: BoxFit.fitWidth,)),
             ),
             const SizedBox(height: 15,),
-            Text(names[index],style: GoogleFonts.andada(fontSize: 20),textAlign: TextAlign.center,),
+            Text(names[index],style: GoogleFonts.andada(fontSize: 20), textAlign: TextAlign.center,),
             const SizedBox(height: 5,),
-            Text(designation[index],style: GoogleFonts.andada(fontSize: 15,color: Colors.white54,),textAlign: TextAlign.center),
+            Text(designation[index],style: GoogleFonts.andada(fontSize: 15,color: Colors.white54),textAlign: TextAlign.center)
           ],
         ),
-        isButtonDisabled?Container(
-          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
-          child: DelayedDisplay(
-            delay: const Duration(seconds: 1),
-            child: Text('Thank you for Lighting the lamp',style: GoogleFonts.andada(fontSize: 25),textAlign: TextAlign.center,)
+
+        Container(
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
           ),
-        ):const SizedBox(),
+          child: InkWell(
+            onTap: (){
+              setState(() {
+                menu=!menu;
+              });
+            },
+            child: const Icon(Icons.account_circle,size: 40,),
+          ),
+        )
+
       ],
     );
   }
 
   Widget rightSide(){
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           padding: const EdgeInsets.only(bottom: 50,top: 20),
           height: 4*MediaQuery.of(context).size.height/5,
           child: Stack(
             children: [
-              const Image(image: AssetImage('assets/images/plane.png')),
-              !isButtonDisabled?
-                const SizedBox()
-                  :const DelayedDisplay(
-                    delay: Duration(seconds: 1),
-                    slidingBeginOffset: Offset(0, 0.1),
-                    child: Image(image:AssetImage('assets/images/one.gif'))
-                  ),
+              Image.asset('assets/images/plane.png'),
+              one? const DelayedDisplay(
+                delay: Duration(seconds: 1),
+                  slidingBeginOffset: Offset(0, 0.1),
+                child: Image(image: AssetImage('assets/images/lights/1.gif'))
+              ):const SizedBox(),
+              two? const DelayedDisplay(
+                  delay: Duration(seconds: 1),
+                  slidingBeginOffset: Offset(0, 0.1),
+                  child: Image(image: AssetImage('assets/images/lights/2.gif'))
+              ):const SizedBox(),
+              three? const DelayedDisplay(
+                  delay: Duration(seconds: 1),
+                  slidingBeginOffset: Offset(0, 0.1),
+                  child: Image(image: AssetImage('assets/images/lights/3.gif'))
+              ):const SizedBox(),
+              four? const DelayedDisplay(
+                  delay: Duration(seconds: 1),
+                  slidingBeginOffset: Offset(0, 0.1),
+                  child: Image(image: AssetImage('assets/images/lights/4.gif'))
+              ):const SizedBox(),
+              five? const DelayedDisplay(
+                  delay: Duration(seconds: 1),
+                  slidingBeginOffset: Offset(0, 0.1),
+                  child: Image(image: AssetImage('assets/images/lights/5.gif'))
+              ):const SizedBox(),
+              six? const DelayedDisplay(
+                  delay: Duration(seconds: 1),
+                  slidingBeginOffset: Offset(0, 0.1),
+                  child: Image(image: AssetImage('assets/images/lights/6.gif'))
+              ):const SizedBox(),
+              seven? const DelayedDisplay(
+                  delay: Duration(seconds: 1),
+                  slidingBeginOffset: Offset(0, 0.1),
+                  child: Image(image: AssetImage('assets/images/lights/7.gif'))
+              ):const SizedBox(),
+              eight? const DelayedDisplay(
+                  delay: Duration(seconds: 1),
+                  slidingBeginOffset: Offset(0, 0.1),
+                  child: Image(image: AssetImage('assets/images/lights/8.gif'))
+              ):const SizedBox(),
+              nine? const DelayedDisplay(
+                  delay: Duration(seconds: 1),
+                  slidingBeginOffset: Offset(0, 0.1),
+                  child: Image(image: AssetImage('assets/images/lights/9.gif'))
+              ):const SizedBox(),
+
+
             ],
           ),
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height/5,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("assets/images/fire.gif"),
-              MaterialButton(
-                onPressed: isButtonDisabled?null:(){
-                  var washingtonRef = firestore.collection('diya').doc('IfKwGg9LbZLRlj6ThXfi');
-                  washingtonRef.update({
-                    "count": FieldValue.increment(1)
-                  });
-                  setState(() {
-                    isButtonDisabled =true;
-                  });
 
-                  player.play();
-
-                },
-                disabledColor: Colors.white70,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text('IGNIS',style: GoogleFonts.andada(fontSize: 20,color: Colors.black),),
-                ),
-              )
-            ],
+        /*SizedBox(
+          child: MaterialButton(
+            onPressed: (){
+              var washingtonRef = firestore.collection('diya').doc('IfKwGg9LbZLRlj6ThXfi');
+              washingtonRef.update({
+                "count": 0
+              });
+            },
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Text('Reset',style: GoogleFonts.andada(fontSize: 20,color: Colors.black),),
+            ),
           ),
-        )
+        )*/
       ],
     );
   }
+
+  List<Widget> listWidget(){
+    List<Widget> rows=[];
+
+    for(var temp in names) {
+      rows.add(listNames(names.indexOf(temp)));
+    }
+
+    return rows;
+  }
+
+  Widget listNames(id){
+    return InkWell(
+      onTap: (){
+        setState(() {
+          index=id;
+          menu=false;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 1),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 8,),
+            Text(names[id],style: GoogleFonts.andada(fontSize: 16),),
+            const SizedBox(height: 5,),
+            Text(designation[id],style: GoogleFonts.andada(fontSize: 14,color: Colors.white54),),
+            const SizedBox(height: 8,),
+          ],
+        ),
+      ),
+    );
+  }
+
 
 }

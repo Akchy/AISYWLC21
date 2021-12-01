@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.davish.aisywlc21">
+    package="com.davish.aisywlc_inauguration">
    <application
-        android:label="aisywlc21"
+        android:label="aisywlc_inauguration"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
