@@ -19,9 +19,10 @@ class _InaugurateState extends State<Inaugurate> {
 
   List<String>? displayPic = [
     'assets/images/suresh.jpeg',
-    'assets/images/pradeep.png',
     'assets/images/deepak.jpeg',
-    'assets/images/sarada.jpg',
+    'assets/images/kasim.jpg',
+    'assets/images/sarit.jpg',
+    'assets/images/debabrata.jpg',
     'assets/images/rajashree.jpg',
     'assets/images/prerna.png',
     'assets/images/vijayalatha.jpg',
@@ -30,9 +31,10 @@ class _InaugurateState extends State<Inaugurate> {
 
   List<String> names = [
     'Dr. K.R. Suresh Nair',
-    'Dr. Thalappil Pradeep',
     'Mr. Deepak Mathur',
-    'Ms. Sarada Jayakrishnan',
+    'Prof. Muhammed Kasim',
+    'Dr. Sarit Kumar Das',
+    'Dr. Debabrata Das',
     'Dr. Rajashree Jain',
     'Dr. Prerna Gaur',
     'Dr. Y. Vijayalata',
@@ -41,9 +43,10 @@ class _InaugurateState extends State<Inaugurate> {
 
   List<String> designation =[
     'Chair, IEEE India Council',
-    'Institute Professor, IIT Madras',
     'Director, IEEE Region 10',
-    'Chair, IEEE Kerala Section',
+    'Vice Chair, IEEE Kerala Section',
+    'Institute Chair Professor, IIT Madras',
+    'Chair-Elect, IEEE India Council 2021',
     'Secretary, IEEE India Council',
     'Treasurer, IEEE India Council',
     'Vice Chair, Student Activities, IEEE India Council',

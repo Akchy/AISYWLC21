@@ -19,9 +19,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int dropdownValue = 0;
   List<String> names = [
     'Dr. K.R. Suresh Nair',
-    'Dr. Thalappil Pradeep',
     'Mr. Deepak Mathur',
-    'Ms. Sarada Jayakrishnan',
+    'Prof. Muhammed Kasim',
+    'Dr. Sarit Kumar Das',
+    'Dr. Debabrata Das',
     'Dr. Rajashree Jain',
     'Dr. Prerna Gaur',
     'Dr. Y. Vijayalata',
